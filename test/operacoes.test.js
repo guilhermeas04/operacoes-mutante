@@ -73,4 +73,59 @@ describe('Suíte de Testes Fraca para 50 Operações Aritméticas', () => {
   test('48. deve calcular o dobro de um número', () => { expect(dobro(10)).toBe(20); });
   test('49. deve calcular o triplo de um número', () => { expect(triplo(10)).toBe(30); });
   test('50. deve calcular a metade de um número', () => { expect(metade(20)).toBe(10); });
+  describe('Testes adicionais para matar mutantes sobreviventes', () => {
+    test('deve validar mensagens e caminhos de erro', () => {
+      expect(() => divisao(5, 0)).toThrow('Divis');
+      expect(() => raizQuadrada(-1)).toThrow('raiz quadrada');
+      expect(() => fatorial(-1)).toThrow('Fatorial');
+      expect(() => maximoArray([])).toThrow('Array vazio');
+      expect(() => minimoArray([])).toThrow('Array vazio');
+      expect(() => inverso(0)).toThrow('inverter');
+      expect(() => medianaArray([])).toThrow('Array vazio');
+    });
+
+    test('deve cobrir casos de borda em fatorial, media e produto', () => {
+      expect(raizQuadrada(0)).toBe(0);
+      expect(fatorial(0)).toBe(1);
+      expect(fatorial(1)).toBe(1);
+      expect(mediaArray([])).toBe(0);
+      expect(produtoArray([])).toBe(1);
+    });
+
+    test('deve rejeitar casos negativos em verificacoes booleanas', () => {
+      expect(isPar(7)).toBe(false);
+      expect(isImpar(8)).toBe(false);
+      expect(isDivisivel(10, 3)).toBe(false);
+      expect(isMaiorQue(5, 5)).toBe(false);
+      expect(isMenorQue(5, 5)).toBe(false);
+      expect(isEqual(7, 8)).toBe(false);
+    });
+
+    test('deve reconhecer numeros nao primos e casos limite', () => {
+      expect(isPrimo(1)).toBe(false);
+      expect(isPrimo(0)).toBe(false);
+      expect(isPrimo(9)).toBe(false);
+      expect(isPrimo(2)).toBe(true);
+    });
+
+    test('deve limitar valores abaixo e acima no clamp', () => {
+      expect(clamp(-5, 0, 10)).toBe(0);
+      expect(clamp(15, 0, 10)).toBe(10);
+      expect(clamp(0, 0, 10)).toBe(0);
+      expect(clamp(10, 0, 10)).toBe(10);
+    });
+
+    test('deve converter temperaturas com valores que exercitam toda a formula', () => {
+      expect(celsiusParaFahrenheit(100)).toBe(212);
+      expect(celsiusParaFahrenheit(-40)).toBe(-40);
+      expect(fahrenheitParaCelsius(212)).toBe(100);
+      expect(fahrenheitParaCelsius(-40)).toBe(-40);
+    });
+
+    test('deve calcular mediana para arrays pares e desordenados', () => {
+      expect(medianaArray([5, 1, 3])).toBe(3);
+      expect(medianaArray([4, 1, 2, 3])).toBe(2.5);
+      expect(medianaArray([10, 2, 8, 4])).toBe(6);
+    });
+  });
 });
